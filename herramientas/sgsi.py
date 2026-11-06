@@ -458,6 +458,8 @@ def medir_efectividad(controles, en_linea, res):
     rc, out = correr("herramientas/blindaje.py")
     for m in re.finditer(r"^([✓✗·!]) (B\d+) ", out, re.M):
         resultados[m.group(2)] = {"✓": "pasa", "✗": "falla", "·": "no aplica aquí", "!": "falla"}[m.group(1)]
+    if "RESUMEN " not in out:  # el banco no terminó: una prueba que no corre no falla, pero tampoco cuenta
+        resultados["_diagnostico_blindaje"] = f"el banco no terminó (código {rc}): " + " | ".join(out.strip().splitlines()[-6:])[:600]
     rc, out = correr("herramientas/baterias.py")
     for m in re.finditer(r"^([✓✗]) (\w+): ", out, re.M):
         resultados[f"bateria:{m.group(2)}"] = "pasa" if m.group(1) == "✓" else "falla"
@@ -474,10 +476,12 @@ def medir_efectividad(controles, en_linea, res):
     finally:
         shutil.rmtree(tmp.parent, ignore_errors=True)
     if en_linea:
-        rc, _ = correr("herramientas/abierta_a_aportes.py")
-        resultados["red:abierta_a_aportes"] = "pasa" if rc == 0 else "falla"
-        rc, _ = correr("herramientas/vulnerabilidades.py")
-        resultados["red:vulnerabilidades"] = {0: "pasa", 1: "falla"}.get(rc, "sin medir")
+        for prueba, script in (("red:abierta_a_aportes", "abierta_a_aportes.py"), ("red:vulnerabilidades", "vulnerabilidades.py")):
+            rc, out = correr(f"herramientas/{script}")
+            resultados[prueba] = {0: "pasa", 1: "falla"}.get(rc, "sin medir")
+            if rc != 0:
+                fallidas = [l.strip() for l in out.splitlines() if l.strip().startswith("✗")]
+                resultados[f"_diagnostico_{prueba}"] = f"{prueba}: " + " | ".join(fallidas or out.strip().splitlines()[-2:])[:300]
     efect = {}
     for cid, c in controles.items():
         estados = [resultados.get(t, "sin medir") for t in c.get("pruebas", [])]
@@ -485,6 +489,8 @@ def medir_efectividad(controles, en_linea, res):
             e = "sin prueba automática"
         elif "falla" in estados:
             e = "falla"
+        elif "sin medir" in estados:  # una prueba que no corrió no cuenta, aunque las demás pasen (L43)
+            e = "sin medir aquí"
         elif "pasa" in estados:
             e = "operando"
         else:
@@ -697,11 +703,17 @@ def main(argv):
     res, x = evaluar(cargar(), versionables(), argv)
     activos, controles, riesgos, criterio = x["activos"], x["controles"], x["riesgos"], x["criterio"]
     soa, corridas, rutas_locales, efect, medidas = x["soa"], x["corridas"], x["rutas_locales"], x["efect"], x["medidas"]
-    texto = informe(activos, controles, riesgos, criterio, soa, corridas, rutas_locales)
     res.ok("informe")
-    if "--escribir" in argv:
-        INFORME.write_text(texto, encoding="utf-8")
-    elif not INFORME.exists() or INFORME.read_text(encoding="utf-8") != texto:
+    if efect is not None:
+        # el informe publicado sale de la comprobación estática: lo medido hoy (un control caído) no lo reescribe
+        if "--escribir" in argv:
+            _, s = evaluar(cargar(), versionables())
+            INFORME.write_text(informe(s["activos"], s["controles"], s["riesgos"], s["criterio"], s["soa"], s["corridas"],
+                                       s["rutas_locales"]), encoding="utf-8")
+    elif "--escribir" in argv:
+        INFORME.write_text(informe(activos, controles, riesgos, criterio, soa, corridas, rutas_locales), encoding="utf-8")
+    elif not INFORME.exists() or INFORME.read_text(encoding="utf-8") != informe(activos, controles, riesgos, criterio, soa,
+                                                                                   corridas, rutas_locales):
         res.aviso("informe", "sgsi/INFORME-SGSI.md no coincide con los datos: python herramientas/sgsi.py --escribir")
 
     nombres = {"inventario": f"inventario: {len(activos)} activos con C·I·D, propietario y custodio",
@@ -711,7 +723,7 @@ def main(argv):
                "controles": f"{len(controles)} controles con evidencia y pruebas que existen",
                "riesgos": f"{len(riesgos)} riesgos valorados con la regla de la tríada (criterio {criterio})",
                "soa": f"Declaración de Aplicabilidad: {sum(1 for f in soa if f['aplica'])} de 93 aplican",
-               "corridas": f"etiqueta C·I·D de {len(corridas)} corridas", "informe": "informe al día con los datos"}
+               "corridas": f"etiqueta C·I·D de {len(corridas)} corridas", "informe": "informe al día con los datos" if efect is None else "informe: se compara en la comprobación sin --efectividad"}
     for ch in CHEQUEOS:
         info = res.chequeos.get(ch, {"fallas": [], "avisos": []})
         print(f"{'✓' if not info['fallas'] else '✗'} {nombres[ch]}")
@@ -724,6 +736,9 @@ def main(argv):
         for e in efect.values():
             cuenta[e["estado"]] = cuenta.get(e["estado"], 0) + 1
         print("Efectividad de los controles (9.1): " + ", ".join(f"{v} {k}" for k, v in sorted(cuenta.items())))
+        for clave, texto_ in sorted((medidas or {}).items()):
+            if clave.startswith("_diagnostico"):
+                print(f"    {texto_}")
         for estado in ("falla", "sin medir aquí"):
             ids = [f"{k} ({', '.join(t for t, s in v['pruebas'].items() if s != 'pasa')})" for k, v in efect.items() if v["estado"] == estado]
             if ids:

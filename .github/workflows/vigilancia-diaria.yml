@@ -27,4 +27,6 @@ jobs:
         run: python herramientas/vulnerabilidades.py
       - name: SGSI con la efectividad de cada control (blindaje, baterías, corrida sintética, mutantes y comprobaciones con red)
         if: always()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   # solo para no chocar con el límite de la API pública; permiso de lectura
         run: python herramientas/sgsi.py --efectividad --en-linea

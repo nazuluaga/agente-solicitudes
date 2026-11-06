@@ -113,8 +113,10 @@ def main(argv):
     if any(r.startswith("herramientas/") for e, r in archivos if e != "D"):
         rc, out = correr("herramientas/blindaje.py")
         for linea in out.splitlines():
-            if linea.startswith("✗"):
+            if linea.startswith(("✗", "!")):
                 fallas.append(f"el cambio debilita el blindaje: {linea[2:][:160]}")
+        if "RESUMEN " not in out:  # un banco que no termina no prueba nada (L27, L43)
+            fallas.append(f"el banco de blindaje no terminó (código {rc}): {' | '.join(out.strip().splitlines()[-2:])[:200]}")
     # baterías: una falla causada por un caso NUEVO de este aporte es un hueco encontrado (valioso), no un error
     rc, out = correr("herramientas/baterias.py")
     for linea in out.splitlines():

@@ -252,6 +252,12 @@
       "leccion": "Las defensas se prueban donde existen: el filtro de aportes corría en Linux, donde no hay sandbox-exec; B11 (red) y B12 (escritura) cedían y todo aporte que tocara herramientas/ habría fallado. El filtro y la vigilancia diaria corren en macOS.",
       "origen": "primera ejecución real del filtro en GitHub Actions (pull request del SGSI, 6-nov-2026); lo encontró la valoración de riesgos del SGSI",
       "prueba": "sgsi.py, chequeo permisos: un flujo que corre el banco de blindaje fuera de macOS falla"
+    },
+    {
+      "id": "L43",
+      "leccion": "Un SystemExit dentro de una prueba cortaba el banco de blindaje en silencio: B18 cargaba la spec con verificar.cargar_spec, que exige los CSV de SECOP (no se publican); en GitHub Actions el banco se detenía en B18, B18 y B19 no corrían y el filtro de aportes pasaba porque solo buscaba líneas ✗. Ahora B18 lee la spec sin datos, el banco convierte un SystemExit en ERROR, el filtro exige que el banco termine (RESUMEN) y el SGSI no cuenta como operando un control con una prueba sin medir.",
+      "origen": "efectividad del SGSI en la vigilancia diaria sobre main (6-nov-2026): CT28 salió «sin medir aquí» en Actions y pasaba en el equipo del dueño, donde los datos sí existen",
+      "prueba": "blindaje.py en un clon sin datos de SECOP (GitHub Actions); validar_aporte.py falla si el banco no imprime RESUMEN"
     }
   ]
 }

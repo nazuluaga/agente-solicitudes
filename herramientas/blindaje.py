@@ -311,7 +311,8 @@ def b17():
 @prueba("B18", "salidas", "un nombre de marca o un motivo de exclusión con HTML o forma de instrucción llega al informe")
 def b18():
     c = RAIZ / "corridas" / "2026-11-06-pipeline-completo-secop-medellin-2025"
-    spec = verificar.cargar_spec(c)
+    # la spec sin resolver datos: los CSV de SECOP no se publican (.gitignore) y el informe no los necesita (L43)
+    spec = json.loads((c / "spec.json").read_text(encoding="utf-8"))
     inf = json.loads((c / "informe.json").read_text(encoding="utf-8"))
     conc = inf["implementaciones"]["a"].get("conciliacion")
     if not isinstance(conc, dict):
@@ -350,7 +351,7 @@ def main(argv):
             continue
         try:
             out = fn()
-        except Exception as e:
+        except (Exception, SystemExit) as e:  # un SystemExit en una prueba no puede cortar el banco y esconder las demás (L43)
             out = r("ERROR", f"{type(e).__name__}: {str(e)[:160]}")
         filas.append({"id": id_, "capa": capa, "ataque": nombre, **out})
         icono = {"RESISTE": "✓", "CEDE": "✗", "NO APLICA": "·", "ERROR": "!"}[out["resultado"]]
