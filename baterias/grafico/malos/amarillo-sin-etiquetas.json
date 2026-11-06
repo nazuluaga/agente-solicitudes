@@ -1,0 +1,42 @@
+{
+ "caso": "Barras amarillas #F0E442 sobre blanco (1,3:1) y sin etiquetas de texto.",
+ "debe_fallar": "contraste de las marcas de 3:1 o más con el fondo (WCAG 1.4.11)",
+ "figura": {
+  "data": [
+   {
+    "type": "bar",
+    "orientation": "h",
+    "x": [
+     80,
+     71,
+     62,
+     53
+    ],
+    "y": [
+     "Entidad A",
+     "Entidad B",
+     "Entidad C",
+     "Entidad D"
+    ],
+    "marker": {
+     "color": "#F0E442"
+    }
+   }
+  ],
+  "layout": {
+   "title": {
+    "text": "Valor contratado en 2025 por entidad, cuatro entidades"
+   },
+   "xaxis": {
+    "title": {
+     "text": "Valor contratado (miles de millones de pesos)"
+    }
+   },
+   "paper_bgcolor": "#ffffff",
+   "plot_bgcolor": "#ffffff",
+   "font": {
+    "color": "#444444"
+   }
+  }
+ }
+}

@@ -1,0 +1,70 @@
+{
+ "caso": "Ocho colores (Okabe-Ito completo), con etiquetas: pasa contraste y daltonismo, pero son más de siete.",
+ "debe_fallar": "colores con función: 7 o menos",
+ "figura": {
+  "data": [
+   {
+    "type": "bar",
+    "orientation": "h",
+    "x": [
+     80,
+     71,
+     62,
+     53,
+     44,
+     35,
+     26,
+     17
+    ],
+    "y": [
+     "Entidad A",
+     "Entidad B",
+     "Entidad C",
+     "Entidad D",
+     "Entidad E",
+     "Entidad F",
+     "Entidad G",
+     "Entidad H"
+    ],
+    "marker": {
+     "color": [
+      "#E69F00",
+      "#56B4E9",
+      "#009E73",
+      "#F0E442",
+      "#0072B2",
+      "#D55E00",
+      "#CC79A7",
+      "#000000"
+     ]
+    },
+    "text": [
+     "80 mil millones",
+     "71 mil millones",
+     "62 mil millones",
+     "53 mil millones",
+     "44 mil millones",
+     "35 mil millones",
+     "26 mil millones",
+     "17 mil millones"
+    ],
+    "textposition": "outside"
+   }
+  ],
+  "layout": {
+   "title": {
+    "text": "Valor contratado en 2025 por entidad, ocho entidades"
+   },
+   "xaxis": {
+    "title": {
+     "text": "Valor contratado (miles de millones de pesos)"
+    }
+   },
+   "paper_bgcolor": "#ffffff",
+   "plot_bgcolor": "#ffffff",
+   "font": {
+    "color": "#444444"
+   }
+  }
+ }
+}

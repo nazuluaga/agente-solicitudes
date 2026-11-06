@@ -1,0 +1,51 @@
+{
+ "caso": "Eje de valores en escala logarítmica, dicho en el título del eje.",
+ "figura": {
+  "data": [
+   {
+    "type": "scatter",
+    "mode": "lines",
+    "x": [
+     "2025-01",
+     "2025-02",
+     "2025-03",
+     "2025-04",
+     "2025-05",
+     "2025-06"
+    ],
+    "y": [
+     12,
+     140,
+     1800,
+     950,
+     22000,
+     4100
+    ],
+    "line": {
+     "color": "#2a78d6"
+    }
+   }
+  ],
+  "layout": {
+   "title": {
+    "text": "Contratos firmados por mes, enero a junio de 2025"
+   },
+   "xaxis": {
+    "title": {
+     "text": "Mes"
+    }
+   },
+   "paper_bgcolor": "#ffffff",
+   "plot_bgcolor": "#ffffff",
+   "font": {
+    "color": "#444444"
+   },
+   "yaxis": {
+    "type": "log",
+    "title": {
+     "text": "Contratos (escala logarítmica)"
+    }
+   }
+  }
+ }
+}

@@ -31,6 +31,13 @@ Cada aporte aceptado queda aquí, con el usuario de GitHub de quien lo propuso (
 - Lección L42: el filtro corría en Linux, donde no hay `sandbox-exec`; B11 y B12 cedían y todo aporte que tocara `herramientas/` habría fallado. El filtro y la vigilancia corren ahora en macOS, y `sgsi.py` lo exige.
 - Riesgo que queda a decisión del dueño: R16, referencias legales inventadas por la IA que `validar_ficha.py` deja pasar (residual 15, por encima del criterio de 10).
 
+## v1.4 · 6 de noviembre de 2026 · presentación y color con estándares validados
+
+- Subagente 12, **Presentador** (`agentes/12-presentador.md`): propone la presentación como `presentacion.json` (respuesta primero, SCQA, títulos que afirman con su cifra, una evidencia por lámina, método y límites, recomendación) sin escribir números: usa marcadores `{id}` con su cálculo. `herramientas/verificar_presentacion.py` calcula y escribe cada cifra desde el resultado aprobado y arma las láminas solo si todo aprueba; `--autoprueba` con 4 casos buenos y 29 mutantes. Dos rondas de revisión ciega: 13 huecos en la primera versión (NaN, constantes anidadas, números pegados o con palabras, JSON mal formado, celdas sin barrer) y 10 en la segunda (marcadores pegados, símbolos numéricos raros, monedas junto a un marcador, redondeos que muestran 0 o 100 %, falsos positivos); quedaron cubiertos por el diseño con marcadores y por mutantes, salvo los de sentido, que se documentan como límite.
+- `herramientas/gobernanza.py`: la expresión de cédulas y celulares ya no tiene retroceso cúbico (una nota con miles de espacios tardaba 20 s; ahora, milisegundos), sin cambiar lo que detecta.
+- Graficador: color y forma medidos sin IA (`herramientas/color.py`): siete colores o menos, contraste WCAG, simulación de daltonismo, un solo eje, sin 3D, tortas de cinco porciones o menos y escala logarítmica declarada; batería `baterias/grafico/`.
+- Directrices D29 y D30, con sus fuentes (Minto, Alley, Knaflic, FT Visual Vocabulary, Cleveland y McGill, Datawrapper, WCAG 2.2, Okabe-Ito, AI Index, METR y la lección de las gráficas del lanzamiento de GPT-5).
+
 ## Aportes del grupo
 
 Cada aporte entra sin nombre hasta que quien lo propuso acepta aparecer (la casilla del pull request o del formulario).

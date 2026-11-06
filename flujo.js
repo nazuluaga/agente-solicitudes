@@ -6,7 +6,7 @@ export const meta = {
     { title: 'Ingesta', detail: 'la IA escribe el lector (contrato de datos); el código prueba la carga' },
     { title: 'Procesamiento', detail: 'especificación, limpieza declarada (capa limpia con marcas), criterio sellado, dos implementaciones, verificación y reparación' },
     { title: 'Análisis', detail: 'hipótesis registradas y selladas; otro agente las prueba con los datos' },
-    { title: 'Visualización', detail: 'gráfico con lista de comprobación del módulo 4' },
+    { title: 'Visualización', detail: 'gráfico con lista de comprobación del módulo 4 y presentación con cada cifra calculada por el código desde los datos' },
     { title: 'Gobernanza', detail: 'datos personales, revisión ciega de seguridad, baterías e informe final' },
   ],
 }
@@ -58,7 +58,7 @@ const S_GEN = S({ ok: { type: 'boolean' }, filas: { type: 'number' }, notas: str
 const S_VER = S({ estado: str, motivos: arr, fallas_a: arr, fallas_b: arr, concuerdan: { type: 'boolean' }, preguntas_abiertas: { type: 'number' }, reglas_rotas: arr }, ['estado', 'fallas_a', 'fallas_b', 'concuerdan'])
 const S_REP = S({ cambios: str, regla_sospechosa: str }, ['cambios'])
 const S_ETAPA = S({ ok: { type: 'boolean' }, resumen: str, pendientes: arr }, ['ok', 'resumen'])
-const S_FINAL = S({ procesamiento: str, analisis: str, visualizacion: str, gobernanza: str, baterias: str, informe_final: str }, ['procesamiento', 'informe_final'])
+const S_FINAL = S({ procesamiento: str, analisis: str, visualizacion: str, presentacion: str, gobernanza: str, baterias: str, informe_final: str }, ['procesamiento', 'informe_final'])
 
 // ---------------- 1 · Ingesta ----------------
 const fuenteTxt = A.fuente
@@ -238,6 +238,7 @@ Con el resultado aprobado (${C}/informe.json → resultado_oficial), la petició
 - ${C}/grafico.json: {"pregunta", "medida" (columna de valores), "categoria", "periodo", "periodo_incompleto": bool, "escala": 1 o la división que uses (p. ej. 1e9), "fuera_del_grafico": {"motivo", "valor"} si dejas algo por fuera};
 - ${C}/grafico.py: def graficar(resultado, procedencia) -> plotly Figure (plotly.graph_objects o plotly.express). No escribas ni muestres archivos: el verificador escribe el HTML.
 Reglas del módulo 4: el gráfico responde la pregunta; los textos que vienen de los datos (nombres) se escapan («<» como &lt;) porque Plotly interpreta HTML; la fuente y la fecha salen SOLO de procedencia (nada de valores de respaldo escritos en el código: si falta, que falle); barras desde cero; título con qué, dónde y cuándo; unidades en el eje de valores; fuente y fecha de consulta (dd-mm-aaaa) en una anotación; si muestras solo los primeros N, agrega «Otras» o declara fuera_del_grafico; período incompleto marcado; ningún dato personal.
+Color y forma (D29 de DIRECTRICES.md): 7 colores o menos, de preferencia gris para el contexto y un color de acento (p. ej. #2a78d6 con gris #898781); cada marca con contraste de 3:1 o más contra el fondo (si no, con su valor escrito) y texto de 4,5:1 o más; colores distinguibles con daltonismo (nunca rojo contra verde); un solo eje de valores; sin 3D; tortas de 5 porciones o menos; escala logarítmica solo si el título o el eje lo dicen.
 Corre ${PY} ${H}/verificar_grafico.py ${C} y corrige hasta que apruebe (máximo 3 intentos).
 ${bit('4-visualizacion', 'Visualización')}`
 
@@ -247,6 +248,18 @@ const [analisis, visual] = await parallel([
     .then((p) => agent(pProbar, { label: 'probador de hipótesis', phase: 'Análisis', schema: S_ETAPA }).then((q) => ({ propuesta: p, prueba: q }))),
   () => agent(pGraficar, { label: 'graficador', phase: 'Visualización', schema: S_ETAPA }),
 ])
+
+// ---------------- 4 · Visualización: la presentación (cuando terminan el análisis y el gráfico) ----------------
+const pPresentar = `Eres el PRESENTADOR (etapa 4 · Visualización). La IA propone qué decir y en qué orden; el código calcula y escribe cada cifra y arma las láminas.
+
+${contexto}
+
+Sigue tu ficha: ${RAIZ}/agentes/12-presentador.md (léela completa: forma de presentacion.json, evidencias y operaciones de las cifras).
+Puedes leer: ${C}/informe.json (estado, resultado_oficial, preguntas_abiertas), ${C}/spec.json (supuestos y preguntas), ${C}/hipotesis_resultado.json, ${C}/grafico.json, ${C}/grafico_verificacion.json y la procedencia (${C}/datos/procedencia.json). No leas los datos crudos, la capa limpia, el código de los demás ni bitacora/.
+Escribe SOLO ${C}/presentacion.json: la respuesta primero con la decisión que se pide; SCQA; de 1 a 5 hallazgos con un título que afirma el hallazgo con su cifra (de 6 a 22 palabras, hasta 120 caracteres) y una sola evidencia; método, incertidumbre y límites que nombren cada pregunta abierta (P1, P2…); recomendación con qué, quién, próximo paso y cómo se mide. NO escribas números: cada cifra va como marcador {id} declarado en «cifras» con su cálculo y su formato; el código la calcula desde los datos y la escribe. Ni dígitos, ni magnitudes con palabras («la mitad», «millones»), ni «%» fuera de un marcador; solo se permiten los años del período y los ids P1, S1, H1. No escribas código, HTML, fuente ni fecha: los pone el verificador desde la procedencia.
+Corre ${PY} ${H}/verificar_presentacion.py ${C} y corrige hasta que apruebe (máximo 3 intentos). El código comprueba que la cifra sale de los datos, no que la frase la use bien: cuida que cada cifra diga lo que mide (unidad, universo, período).
+${bit('4-visualizacion-presentacion', 'Visualización')}`
+const presentacion = await agent(pPresentar, { label: 'presentador', phase: 'Visualización', schema: S_ETAPA })
 
 // ---------------- 5 · Gobernanza ----------------
 phase('Gobernanza')
@@ -268,6 +281,7 @@ const pFinal = `Ejecuta en este orden, uno por uno, y devuelve la línea RESUMEN
 1. procesamiento: ${PY} ${H}/verificar.py ${C}
 2. analisis: ${PY} ${H}/verificar_hipotesis.py ${C}
 3. visualizacion: ${PY} ${H}/verificar_grafico.py ${C}
+3b. presentacion: ${PY} ${H}/verificar_presentacion.py ${C}
 4. informe_final (primera pasada): ${PY} ${H}/informe_final.py ${C}
 5. gobernanza: ${PY} ${H}/gobernanza.py ${C}
 6. baterias: ${PY} ${H}/baterias.py
@@ -281,5 +295,5 @@ return {
   final,
   lector, especificador: esp, limpiador, revisor: rev, generadores,
   procesamiento: { verificacion: ver, rondas: historial.length - 1, sospechas },
-  analisis, visualizacion: visual, custodio, seguridad: seguridadRev,
+  analisis, visualizacion: visual, presentacion, custodio, seguridad: seguridadRev,
 }

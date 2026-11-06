@@ -28,12 +28,14 @@ CUASI = re.compile(r"(g[ée_]nero|sexo|edad|nacimiento|nacionalidad|etnia|discap
 TEXTO_LIBRE = re.compile(r"(objeto|descripcion_del_proceso|observaci|comentari|^detalle|_detalle|^notas?$|_notas?$|mensaje)", re.I)
 PATRONES = {
     "cédula con contexto": re.compile(
-        r"\b(?:c\.\s?c\.?|cc|c[ée]dula(?:\s+de\s+ciudadan[ií]a)?|identificad[oa]\s+con)\s*(?:no\.?|n[°º.]|n[úu]mero)?\s*[:#]?\s*"
+        # cada parte opcional consume sus propios espacios: con tres «\s*» seguidos, una nota con miles de espacios
+        # tardaba decenas de segundos (retroceso cúbico, hallado por la revisión ciega del verificador de la presentación)
+        r"\b(?:c\.\s?c\.?|cc|c[ée]dula(?:\s+de\s+ciudadan[ií]a)?|identificad[oa]\s+con)(?:\s*(?:no\.?|n[°º.]|n[úu]mero))?(?:\s*[:#])?\s*"
         r"(\d{1,3}(?:[.\s]?\d{3}){1,3})\b", re.I),
     "correo": re.compile(r"\b[\w.+-]+@[\w-]+(?:\.[\w-]+)+\b"),
     # con contexto (cel., teléfono…) o con separadores; un número suelto de 10 dígitos puede ser un valor en pesos
     "celular": re.compile(
-        r"(?i:(?:cel(?:ular)?|tel(?:[ée]fono)?|m[óo]vil|whatsapp|contacto)\.?\s*:?\s*(?:\+?57\s?)?3\d{2}[\s-]?\d{3}[\s-]?\d{4})"
+        r"(?i:(?:cel(?:ular)?|tel(?:[ée]fono)?|m[óo]vil|whatsapp|contacto)\.?(?:\s*:)?\s*(?:\+?57\s?)?3\d{2}[\s-]?\d{3}[\s-]?\d{4})"
         r"|\+57\s?3\d{9}(?!\d)|(?<![\d.,])3\d{2}[\s-]\d{3}[\s-]?\d{4}(?![\d.,])"),
     "nombre con tratamiento": re.compile(
         r"\b(?i:señor|señora|sr\.|sra\.|don|doña)\s+[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+(?:\s+[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+){1,3}"),
@@ -127,7 +129,7 @@ def barrer_tabla(ruta):
 
 def barrer_salidas(c):
     archivos = [p for p in [c / "informe.md", c / "informe_final.md", c / "informe_final.html", c / "grafico.html",
-                            c / "informe.json", c / "hipotesis_resultado.json"] if p.exists()]
+                            c / "presentacion.html", c / "informe.json", c / "hipotesis_resultado.json"] if p.exists()]
     out = {}
     for p in archivos:
         texto = p.read_text(encoding="utf-8", errors="ignore")

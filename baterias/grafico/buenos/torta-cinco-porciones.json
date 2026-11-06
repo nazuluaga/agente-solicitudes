@@ -1,0 +1,44 @@
+{
+ "caso": "Torta de cinco porciones (el máximo) con la etiqueta en cada porción.",
+ "figura": {
+  "data": [
+   {
+    "type": "pie",
+    "labels": [
+     "Entidad A",
+     "Entidad B",
+     "Entidad C",
+     "Entidad D",
+     "Entidad E"
+    ],
+    "values": [
+     40,
+     25,
+     15,
+     12,
+     8
+    ],
+    "textinfo": "label+percent",
+    "marker": {
+     "colors": [
+      "#E69F00",
+      "#56B4E9",
+      "#009E73",
+      "#F0E442",
+      "#0072B2"
+     ]
+    }
+   }
+  ],
+  "layout": {
+   "title": {
+    "text": "Participación en el valor contratado en 2025, cinco entidades"
+   },
+   "paper_bgcolor": "#ffffff",
+   "plot_bgcolor": "#ffffff",
+   "font": {
+    "color": "#444444"
+   }
+  }
+ }
+}

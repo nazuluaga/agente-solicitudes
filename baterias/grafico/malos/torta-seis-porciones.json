@@ -1,0 +1,48 @@
+{
+ "caso": "Torta de seis porciones, con etiquetas y colores que pasan: el problema es la forma.",
+ "debe_fallar": "sin 3D ni tortas de más de cinco porciones",
+ "figura": {
+  "data": [
+   {
+    "type": "pie",
+    "labels": [
+     "Entidad A",
+     "Entidad B",
+     "Entidad C",
+     "Entidad D",
+     "Entidad E",
+     "Entidad F"
+    ],
+    "values": [
+     35,
+     22,
+     15,
+     12,
+     9,
+     7
+    ],
+    "textinfo": "label+percent",
+    "marker": {
+     "colors": [
+      "#E69F00",
+      "#56B4E9",
+      "#009E73",
+      "#F0E442",
+      "#0072B2",
+      "#D55E00"
+     ]
+    }
+   }
+  ],
+  "layout": {
+   "title": {
+    "text": "Participación en el valor contratado en 2025, seis entidades"
+   },
+   "paper_bgcolor": "#ffffff",
+   "plot_bgcolor": "#ffffff",
+   "font": {
+    "color": "#444444"
+   }
+  }
+ }
+}

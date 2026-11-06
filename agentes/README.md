@@ -15,6 +15,7 @@ Cada ficha define un subagente: qué hace, qué puede leer y qué no, qué entre
 | 09 | [Graficador](09-graficador.md) | 4 · Visualización | `herramientas/verificar_grafico.py` |
 | 10 | [Custodio de datos personales](10-custodio-de-datos-personales.md) | 5 · Gobernanza | `herramientas/gobernanza.py` |
 | 11 | [Revisor ciego de seguridad](11-revisor-ciego-de-seguridad.md) | 5 · Gobernanza | `herramientas/baterias.py` |
+| 12 | [Presentador](12-presentador.md) | 4 · Visualización | `herramientas/verificar_presentacion.py` (calcula y escribe cada cifra) |
 
 Las [reglas comunes](00-reglas-comunes.md) aplican a todos.
 
@@ -32,6 +33,7 @@ La independencia es lo que evita que el que prueba comparta los puntos ciegos de
 | Proponente | spec, resultado aprobado | pruebas |
 | Probador | hipótesis (enunciado, umbral, línea base), CSV | razonamiento del proponente, resultado aprobado, implementaciones |
 | Graficador | resultado aprobado, procedencia | datos crudos |
+| Presentador | resultado aprobado, hipótesis probadas, gráfico aprobado, supuestos y preguntas, procedencia | datos crudos, capa limpia, código y bitácoras de los demás |
 | Custodio | metadatos de todas las columnas, conteos | filas y valores |
 | Revisor ciego de seguridad | el código generado | bitácora y notas de los autores |
 
@@ -44,5 +46,6 @@ Procesamiento  especificador ──► limpiador ──► limpieza.py ──►
                ──► verificar.py ──► reparador (hasta 2 rondas)
 Análisis       proponente (sella) ──► probador ──► verificar_hipotesis.py
 Visualización  graficador ──► verificar_grafico.py            (en paralelo con el análisis)
+               presentador ──► verificar_presentacion.py      (cuando terminan el análisis y el gráfico)
 Gobernanza     revisor ciego de seguridad ──► gobernanza.py ──► baterias.py ──► informe_final.py
 ```

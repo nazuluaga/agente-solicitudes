@@ -21,10 +21,10 @@ Lee https://raw.githubusercontent.com/CristianBTA/agente-solicitudes/main/APORTA
 | **Ingesta** | escribe el lector: un contrato de datos con fuente, columnas, tipos, llave, dominios y rangos | conteo contra la fuente, llave única y sin nulos, tipos, rangos, dominios, minimización, correr dos veces da el mismo archivo, procedencia con fecha y huella |
 | **Procesamiento** | limpia y transforma: especificación, plan de limpieza, reglas, caso con respuesta conocida y dos implementaciones independientes | capa limpia con las mismas filas y marcas de calidad, calidad antes y después con umbrales, criterio sellado antes del código, reglas sobre el dato crudo, caso conocido, A = B, conciliación, repetibilidad, compuertas y caja de arena |
 | **Análisis** | propone hipótesis | registro y sello previos, consulta independiente de otro agente, umbral y línea base |
-| **Visualización** | genera el gráfico | cuenta de control, eje desde cero, título con período, unidades, fuente y fecha, sin datos personales |
+| **Visualización** | genera el gráfico y propone la presentación (solo textos y cifras declaradas) | cuenta de control, eje desde cero, título con período, unidades, fuente y fecha, color con contraste y apto para daltonismo, un solo eje, sin datos personales; en la presentación: respuesta primero, títulos que afirman y cada cifra calculada y escrita por el código |
 | **Gobernanza** | halla datos personales con nombres, tipos y conteos, nunca filas | barrido determinista de datos y salidas, k-anonimato, comparación con la IA, revisión ciega de seguridad y baterías |
 
-- **Los subagentes y sus parámetros:** [`agentes/`](agentes/README.md). Once fichas independientes de la herramienta (rol, qué puede leer y qué no, qué entrega, reglas, lo que nunca hace y la prueba sin IA que lo comprueba), las reglas comunes y la matriz de quién puede ver qué.
+- **Los subagentes y sus parámetros:** [`agentes/`](agentes/README.md). Doce fichas independientes de la herramienta (rol, qué puede leer y qué no, qué entrega, reglas, lo que nunca hace y la prueba sin IA que lo comprueba), las reglas comunes y la matriz de quién puede ver qué.
 - **Cómo validar el trabajo y qué exige cada práctica:** [`DIRECTRICES.md`](DIRECTRICES.md), con la guía «Validar este repositorio en 15 minutos».
 - **La seguridad como sistema (SGSI):** [`sgsi/`](sgsi/README.md). Inventario con su valor en confidencialidad, integridad y disponibilidad, 27 riesgos, la Declaración de Aplicabilidad de los 93 controles de ISO/IEC 27001:2022 y la regla de la tríada (la confidencialidad no tiene reversa, la integridad se corrige, la disponibilidad se restablece), comprobados sin IA por `herramientas/sgsi.py`. Las vulnerabilidades se reportan en privado: [`SECURITY.md`](SECURITY.md).
 - **Qué se midió:** [`evidencia/README.md`](evidencia/README.md). Generadores de un solo disparo frente al sistema verificado, en datos sintéticos y en SECOP II, con la prueba del criterio por mutantes (12 de 12 y 11 de 11) y los costos.
@@ -71,7 +71,8 @@ Con archivos locales, `datos` reemplaza a `fuente`: `{"ventas": "<ruta>/ventas.c
 | `herramientas/perfilar.py` | Perfil determinista: formatos, fechas ambiguas y con hora, repetidos, variantes, códigos que no cruzan y códigos con varios nombres; nunca muestra valores personales |
 | `herramientas/verificar.py` | Compuertas, caja de arena, reglas, caso conocido, A = B, conciliación, repetibilidad, tiempos y anticipo; `--autoprueba` y `--sellar` |
 | `herramientas/verificar_hipotesis.py` | Sella las hipótesis y las prueba contra su umbral y su línea base |
-| `herramientas/verificar_grafico.py` | Lista de comprobación del gráfico; escribe el HTML |
+| `herramientas/verificar_grafico.py` | Lista de comprobación del gráfico, con color y forma (`color.py`: contraste WCAG y simulación de daltonismo); escribe el HTML |
+| `herramientas/verificar_presentacion.py` | Calcula y escribe cada cifra de la presentación desde los datos aprobados (la IA solo pone marcadores), comprueba su estructura y escribe las láminas si todo aprueba; `--autoprueba` con mutantes |
 | `herramientas/gobernanza.py` | Datos personales en los datos y en las salidas, k-anonimato y comparación con la clasificación de la IA |
 | `herramientas/seguridad.py`, `dependencias.py`, `caja.py` | Análisis estático (reglas propias y Bandit), librerías permitidas y caja de arena |
 | `herramientas/baterias.py` | Baterías de seguridad, privacidad y lecciones; `--agregar-malo` y `--leccion` para que lo que falló no se repita |

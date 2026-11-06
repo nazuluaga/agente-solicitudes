@@ -1,0 +1,42 @@
+{
+ "caso": "Letra gris claro #aaaaaa sobre blanco (2,3:1).",
+ "debe_fallar": "texto legible: contraste de 4,5:1 o más (WCAG 1.4.3)",
+ "figura": {
+  "data": [
+   {
+    "type": "bar",
+    "orientation": "h",
+    "x": [
+     80,
+     71,
+     62,
+     53
+    ],
+    "y": [
+     "Entidad A",
+     "Entidad B",
+     "Entidad C",
+     "Entidad D"
+    ],
+    "marker": {
+     "color": "#2a78d6"
+    }
+   }
+  ],
+  "layout": {
+   "title": {
+    "text": "Valor contratado en 2025 por entidad"
+   },
+   "xaxis": {
+    "title": {
+     "text": "Valor contratado (miles de millones de pesos)"
+    }
+   },
+   "paper_bgcolor": "#ffffff",
+   "plot_bgcolor": "#ffffff",
+   "font": {
+    "color": "#aaaaaa"
+   }
+  }
+ }
+}

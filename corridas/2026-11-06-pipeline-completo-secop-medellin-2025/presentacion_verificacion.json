@@ -1,0 +1,82 @@
+{
+  "estado": "aprobado",
+  "comprobaciones": [
+    {
+      "comprobacion": "presentacion.json tiene la forma de la ficha",
+      "ok": true,
+      "detalle": "bien"
+    },
+    {
+      "comprobacion": "el resultado que se presenta está aprobado",
+      "ok": true,
+      "detalle": "informe.json: estado «aprobado», 53 filas"
+    },
+    {
+      "comprobacion": "la respuesta va primero y dice qué se pide decidir",
+      "ok": true,
+      "detalle": "presentes"
+    },
+    {
+      "comprobacion": "contexto SCQA completo (situación, complicación, pregunta, respuesta)",
+      "ok": true,
+      "detalle": "completo"
+    },
+    {
+      "comprobacion": "cada cifra se calcula desde los datos aprobados",
+      "ok": true,
+      "detalle": "7 de 7 cifras calculadas: n_entidades = 53, total = 17,2 billones, n_contratos = 49.662, quince = 15, top15 = 97,6 %, h1_pct = 82,4 %, h2_razon = 1,5"
+    },
+    {
+      "comprobacion": "de 1 a 5 hallazgos, cada uno con una sola evidencia válida",
+      "ok": true,
+      "detalle": "3 hallazgos"
+    },
+    {
+      "comprobacion": "los números los escribe el código (marcadores {id}, ningún número a mano)",
+      "ok": true,
+      "detalle": "todos los números salen de cifras declaradas"
+    },
+    {
+      "comprobacion": "títulos que afirman: oración con una cifra, de 6 a 22 palabras y hasta 120 caracteres",
+      "ok": true,
+      "detalle": "todos afirman con cifra"
+    },
+    {
+      "comprobacion": "método, incertidumbre y límites declarados; preguntas abiertas nombradas",
+      "ok": true,
+      "detalle": "3 límites"
+    },
+    {
+      "comprobacion": "recomendación con qué, quién, próximo paso y cómo se mide",
+      "ok": true,
+      "detalle": "completa"
+    },
+    {
+      "comprobacion": "fuente y fecha de consulta tomadas de la procedencia",
+      "ok": true,
+      "detalle": "«SECOP II - Contratos Electrónicos», consultado 2026-11-06"
+    },
+    {
+      "comprobacion": "sin textos con forma de instrucción para una IA",
+      "ok": true,
+      "detalle": "ninguno"
+    },
+    {
+      "comprobacion": "sin caracteres invisibles o bidireccionales",
+      "ok": true,
+      "detalle": "ninguno"
+    },
+    {
+      "comprobacion": "sin datos personales en los textos ni en las tablas",
+      "ok": true,
+      "detalle": "ninguno"
+    }
+  ],
+  "titulos_en_orden": [
+    "Las 53 entidades con sede en Medellín contrataron 17,2 billones en 2025",
+    "Las 15 entidades de mayor valor suman el 97,6 % de lo contratado en 2025",
+    "Los contratos atípicos por arriba aportan el 82,4 % del valor contratado en 2025",
+    "Sin los contratos de valor extremo, el Distrito sigue primero con 1,5 veces la suma de la segunda entidad"
+  ],
+  "html": "presentacion.html"
+}

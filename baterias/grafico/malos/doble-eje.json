@@ -1,0 +1,84 @@
+{
+ "caso": "Valor y número de contratos en dos ejes superpuestos: la escala de cada eje decide si las líneas «se cruzan».",
+ "debe_fallar": "un solo eje de valores (sin doble eje)",
+ "figura": {
+  "data": [
+   {
+    "type": "scatter",
+    "mode": "lines",
+    "name": "Valor",
+    "x": [
+     "2025-01",
+     "2025-02",
+     "2025-03",
+     "2025-04",
+     "2025-05",
+     "2025-06"
+    ],
+    "y": [
+     120,
+     150,
+     90,
+     200,
+     170,
+     210
+    ],
+    "line": {
+     "color": "#2a78d6"
+    }
+   },
+   {
+    "type": "scatter",
+    "mode": "lines",
+    "name": "Contratos",
+    "x": [
+     "2025-01",
+     "2025-02",
+     "2025-03",
+     "2025-04",
+     "2025-05",
+     "2025-06"
+    ],
+    "y": [
+     10,
+     12,
+     9,
+     14,
+     13,
+     15
+    ],
+    "line": {
+     "color": "#898781"
+    },
+    "yaxis": "y2"
+   }
+  ],
+  "layout": {
+   "title": {
+    "text": "Valor y contratos por mes, enero a junio de 2025"
+   },
+   "xaxis": {
+    "title": {
+     "text": "Mes"
+    }
+   },
+   "paper_bgcolor": "#ffffff",
+   "plot_bgcolor": "#ffffff",
+   "font": {
+    "color": "#444444"
+   },
+   "yaxis": {
+    "title": {
+     "text": "Miles de millones de pesos"
+    }
+   },
+   "yaxis2": {
+    "title": {
+     "text": "Contratos"
+    },
+    "overlaying": "y",
+    "side": "right"
+   }
+  }
+ }
+}

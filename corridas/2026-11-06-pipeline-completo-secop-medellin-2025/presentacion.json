@@ -1,0 +1,53 @@
+{
+  "respuesta": {
+    "titulo": "Las {n_entidades} entidades con sede en Medellín contrataron {total} en 2025",
+    "decision": "Decidir si el valor contratado se publica tal cual o después de cotejar en SECOP II los contratos atípicos más grandes."
+  },
+  "scqa": {
+    "situacion": "SECOP II registra los contratos firmados en 2025 por entidades con sede en Medellín: {n_contratos} contratos de {n_entidades} entidades.",
+    "complicacion": "Pocos contratos de valor atípico concentran gran parte del dinero, y los datos mezclan decisiones de negocio todavía abiertas.",
+    "pregunta": "¿Cuánto contrató cada entidad en 2025 y qué tan firme es ese orden?",
+    "respuesta": "Las entidades suman {total} en pesos y las {quince} de mayor valor reúnen el {top15} de ese total; el orden depende de pocos contratos grandes."
+  },
+  "hallazgos": [
+    {
+      "titulo": "Las {quince} entidades de mayor valor suman el {top15} de lo contratado en 2025",
+      "evidencia": {"tipo": "grafico"},
+      "nota": "El resto de entidades queda agrupado en una sola barra."
+    },
+    {
+      "titulo": "Los contratos atípicos por arriba aportan el {h1_pct} del valor contratado en 2025",
+      "evidencia": {"tipo": "hipotesis", "id": "H1"},
+      "nota": "La proporción se mide sobre el valor de los contratos, no sobre el número de entidades."
+    },
+    {
+      "titulo": "Sin los contratos de valor extremo, el Distrito sigue primero con {h2_razon} veces la suma de la segunda entidad",
+      "evidencia": {"tipo": "hipotesis", "id": "H2"},
+      "nota": "El primer lugar del Distrito resiste esa exclusión."
+    }
+  ],
+  "metodo_y_limites": {
+    "metodo": "Se sumó el valor de los contratos firmados en 2025 por cada NIT de entidad con ciudad Medellín en SECOP II, y se probaron hipótesis sobre la concentración con código aparte.",
+    "incertidumbre": "No aplica intervalo: es un censo de los contratos publicados en la fuente, no una muestra. La incertidumbre viene de los contratos atípicos y de las preguntas abiertas.",
+    "limites": [
+      "P1: no se definió si entidad es el NIT o cada unidad que contrata; se usó el NIT.",
+      "P2: no se definió si se excluyen entidades no públicas; se incluyeron todas las del archivo.",
+      "P3: no se definió si las operaciones de crédito público cuentan como valor contratado; se contaron."
+    ]
+  },
+  "recomendacion": {
+    "que": "Cotejar en SECOP II los contratos atípicos de mayor valor antes de publicar el ranking.",
+    "quien": "El equipo de datos junto con quien responde por la pregunta de negocio.",
+    "proximo_paso": "Responder P1, P2 y P3 y revisar uno por uno los contratos de valor extremo.",
+    "como_se_mide": "Se mide con el valor total recalculado y la entidad en primer lugar tras cada respuesta."
+  },
+  "cifras": [
+    {"id": "n_entidades", "calculo": {"op": "conteo"}},
+    {"id": "total", "calculo": {"op": "suma", "columna": "valor_contratado"}, "formato": {"escala": "billones", "decimales": 1}},
+    {"id": "n_contratos", "calculo": {"op": "suma", "columna": "numero_contratos"}},
+    {"id": "quince", "calculo": {"op": "conteo", "primeros": 15}},
+    {"id": "top15", "calculo": {"op": "porcentaje", "parte": {"op": "suma_primeros", "columna": "valor_contratado", "n": 15}, "total": {"op": "suma", "columna": "valor_contratado"}}, "formato": {"decimales": 1}},
+    {"id": "h1_pct", "calculo": {"op": "hipotesis", "id": "H1", "campo": "valor", "como": "porcentaje"}, "formato": {"decimales": 1}},
+    {"id": "h2_razon", "calculo": {"op": "hipotesis", "id": "H2", "campo": "valor"}, "formato": {"decimales": 1}}
+  ]
+}

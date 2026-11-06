@@ -1,0 +1,45 @@
+{
+ "caso": "Dispersión en 3D: la perspectiva deforma las distancias.",
+ "debe_fallar": "sin 3D ni tortas de más de cinco porciones",
+ "figura": {
+  "data": [
+   {
+    "type": "scatter3d",
+    "mode": "markers",
+    "x": [
+     1,
+     2,
+     3
+    ],
+    "y": [
+     4,
+     5,
+     6
+    ],
+    "z": [
+     7,
+     8,
+     9
+    ],
+    "marker": {
+     "color": "#2a78d6"
+    }
+   }
+  ],
+  "layout": {
+   "title": {
+    "text": "Valor, plazo y contratos por entidad en 2025"
+   },
+   "xaxis": {
+    "title": {
+     "text": "Valor contratado (miles de millones de pesos)"
+    }
+   },
+   "paper_bgcolor": "#ffffff",
+   "plot_bgcolor": "#ffffff",
+   "font": {
+    "color": "#444444"
+   }
+  }
+ }
+}

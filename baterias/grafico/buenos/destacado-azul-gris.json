@@ -1,0 +1,49 @@
+{
+ "caso": "Un acento azul y el resto en gris sobre blanco, sin etiquetas: contraste 4,4:1 y 3,6:1, ΔE 11,2 (tritanopía).",
+ "figura": {
+  "data": [
+   {
+    "type": "bar",
+    "orientation": "h",
+    "x": [
+     80,
+     71,
+     62,
+     53,
+     44
+    ],
+    "y": [
+     "Entidad A",
+     "Entidad B",
+     "Entidad C",
+     "Entidad D",
+     "Entidad E"
+    ],
+    "marker": {
+     "color": [
+      "#2a78d6",
+      "#898781",
+      "#898781",
+      "#898781",
+      "#898781"
+     ]
+    }
+   }
+  ],
+  "layout": {
+   "title": {
+    "text": "Valor contratado en 2025: la Entidad A frente a las demás"
+   },
+   "xaxis": {
+    "title": {
+     "text": "Valor contratado (miles de millones de pesos)"
+    }
+   },
+   "paper_bgcolor": "#ffffff",
+   "plot_bgcolor": "#ffffff",
+   "font": {
+    "color": "#444444"
+   }
+  }
+ }
+}

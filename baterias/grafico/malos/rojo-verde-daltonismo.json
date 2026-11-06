@@ -1,0 +1,71 @@
+{
+ "caso": "Rojo #e41a1c y verde #4daf4a sin etiquetas, en fondo oscuro para que el contraste pase (3,7:1 y 6,3:1): con deuteranopía quedan a ΔE 7,8.",
+ "debe_fallar": "colores distinguibles con daltonismo",
+ "figura": {
+  "data": [
+   {
+    "type": "scatter",
+    "mode": "lines",
+    "name": "Contratación directa",
+    "x": [
+     "2025-01",
+     "2025-02",
+     "2025-03",
+     "2025-04",
+     "2025-05",
+     "2025-06"
+    ],
+    "y": [
+     10,
+     12,
+     9,
+     14,
+     13,
+     15
+    ],
+    "line": {
+     "color": "#e41a1c"
+    }
+   },
+   {
+    "type": "scatter",
+    "mode": "lines",
+    "name": "Licitación pública",
+    "x": [
+     "2025-01",
+     "2025-02",
+     "2025-03",
+     "2025-04",
+     "2025-05",
+     "2025-06"
+    ],
+    "y": [
+     8,
+     11,
+     12,
+     10,
+     14,
+     13
+    ],
+    "line": {
+     "color": "#4daf4a"
+    }
+   }
+  ],
+  "layout": {
+   "title": {
+    "text": "Contratos por modalidad y mes, enero a junio de 2025"
+   },
+   "yaxis": {
+    "title": {
+     "text": "Contratos"
+    }
+   },
+   "paper_bgcolor": "#1a1a1a",
+   "plot_bgcolor": "#1a1a1a",
+   "font": {
+    "color": "#e8e8e8"
+   }
+  }
+ }
+}

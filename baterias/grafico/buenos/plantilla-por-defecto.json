@@ -1,0 +1,47 @@
+{
+ "caso": "Sin colores propios: el color sale de la paleta de la plantilla de Plotly (#636efa sobre #E5ECF6, 3,4:1) y la letra, de la plantilla.",
+ "figura": {
+  "data": [
+   {
+    "type": "bar",
+    "x": [
+     "Entidad A",
+     "Entidad B",
+     "Entidad C",
+     "Entidad D"
+    ],
+    "y": [
+     40,
+     31,
+     22,
+     13
+    ]
+   }
+  ],
+  "layout": {
+   "title": {
+    "text": "Valor contratado en 2025 por entidad"
+   },
+   "yaxis": {
+    "title": {
+     "text": "Miles de millones de pesos"
+    }
+   },
+   "template": {
+    "layout": {
+     "colorway": [
+      "#636efa",
+      "#EF553B",
+      "#00cc96",
+      "#ab63fa"
+     ],
+     "plot_bgcolor": "#E5ECF6",
+     "paper_bgcolor": "white",
+     "font": {
+      "color": "#2a3f5f"
+     }
+    }
+   }
+  }
+ }
+}

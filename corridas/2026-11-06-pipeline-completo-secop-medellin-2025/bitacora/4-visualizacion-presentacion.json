@@ -1,0 +1,8 @@
+{
+  "etapa": "4 · Visualización · presentador",
+  "que_se_pidio": "Presentación de 53 entidades y 17,2 billones de pesos en 2025 desde el resultado aprobado, con respuesta primero, SCQA, hallazgos y límites.",
+  "que_devolvio": "presentacion.json con 3 hallazgos (gráfico, H1, H2), 7 cifras con marcadores, límites P1 a P3 y recomendación.",
+  "como_se_probo": "verificar_presentacion.py: aprobado en el intento 2 de 3; las 7 cifras salieron calculadas de los datos.",
+  "que_se_corrigio": "Intento 1 falló por escribir a mano «100.000 millones» en un título y en el próximo paso; se reemplazó por «valor extremo», sin cambiar el sentido de H2.",
+  "sin_verificar": "El verificador no comprueba que la frase use bien cada cifra: el sentido de H2 («valor extremo») quedó más vago que el umbral real y no se cuantifica en pantalla. P1, P2 y P3 siguen abiertas."
+}

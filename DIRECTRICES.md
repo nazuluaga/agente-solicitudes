@@ -39,6 +39,9 @@ cmp /tmp/datos-prueba/ventas.csv ejemplo/datos/ventas.csv && echo "datos idénti
 .venv/bin/python herramientas/sgsi.py --autoprueba
 .venv/bin/python herramientas/sgsi.py --efectividad
 
+# 5d. Probar al probador de la presentación: 4 presentaciones buenas aprueban y 29 mutantes (número a mano, marcadores pegados, NaN, título de tema…) fallan
+.venv/bin/python herramientas/verificar_presentacion.py --autoprueba
+
 # 6. (Opcional, con red) SECOP II: los datos no vienen en el repositorio; se descargan con su contrato y se prueban al cargar
 .venv/bin/python herramientas/ingesta.py ejemplo-secop/contrato_recorte_2024-2026.json --salida ejemplo-secop/datos --repetir
 .venv/bin/python herramientas/verificar.py corridas/2026-11-06-secop-medellin-2025
@@ -158,6 +161,23 @@ Quien propone escribe el enunciado, la medida, el umbral y la línea base, y los
 - Cuenta de control: lo que suma el gráfico más lo que se dejó fuera es igual al total de la tabla.
 *Dónde:* `herramientas/verificar_grafico.py`. El HTML lo escribe el verificador, no el código de la IA.
 
+**D29 · El color tiene una función y se mide.**
+- Siete colores o menos; lo ideal es gris para el contexto y un color de acento para lo que importa (Datawrapper).
+- Contraste de 3:1 o más de cada marca contra el fondo (WCAG 1.4.11) y de 4,5:1 para el texto (WCAG 1.4.3). Un color por debajo de 3:1 solo pasa si la marca lleva su valor escrito.
+- Colores distinguibles con daltonismo: diferencia perceptual (ΔE en OKLab ×100) de 8 o más entre cada par, con protanopía, deuteranopía y tritanopía simuladas; nunca rojo contra verde como única diferencia.
+- Un solo eje de valores (con dos ejes, quien diseña escoge dónde se cruzan las líneas); sin 3D; tortas de cinco porciones o menos; si la escala es logarítmica, se dice.
+*Dónde:* `herramientas/verificar_grafico.py` y `herramientas/color.py`, con la batería `baterias/grafico/` (casos buenos que deben pasar y malos que deben fallar).
+*Por qué:* el ojo compara mejor posiciones y longitudes que colores (Cleveland y McGill, 1984); un color que no se distingue o no contrasta borra el dato para una parte del público.
+
+**D30 · La presentación da la respuesta primero y cada cifra sale de los datos.**
+- Primero la conclusión y lo que se pide decidir (pirámide de Minto); luego situación, complicación, pregunta y respuesta (SCQA).
+- Cada título es una afirmación con su cifra, de dos líneas como máximo, y debajo va una sola evidencia (método afirmación-evidencia de Alley). Si solo se leen los títulos, se entiende el argumento.
+- La IA no escribe números: pone marcadores (`{total}`) y declara el cálculo de cada uno; el código calcula la cifra desde el resultado aprobado y la escribe. Un dígito, una magnitud con palabras o un «%» fuera de un marcador hacen fallar la presentación. En el lanzamiento de GPT-5 (agosto de 2025), una barra de 52,8 % se dibujó más alta que una de 69,1 %: lo que no calcula el código, no se presenta.
+- Método, incertidumbre y límites explícitos, con cada pregunta abierta nombrada (como METR); recomendación con qué, quién, próximo paso y cómo se mide.
+- La IA escribe solo `presentacion.json`; las láminas, las tablas, la fuente y la fecha las pone el verificador, y solo si todo aprueba.
+- Lo que el código no puede ver: que la frase use bien una cifra correcta (por ejemplo, llamar «Medellín» a las entidades con sede en Medellín). Eso lo revisa una persona o un juez ciego con la lámina «Prueba de los títulos».
+*Dónde:* `agentes/12-presentador.md` y `herramientas/verificar_presentacion.py` (`--autoprueba`: 4 presentaciones buenas aprueban y 29 mutantes fallan donde deben).
+
 ## F · Gobernanza
 
 **D18 · Nunca filas a la IA; el texto libre es un dato personal en potencia.**
@@ -255,7 +275,7 @@ La seguridad del repositorio, ordenada como un sistema de gestión (ISO/IEC 2700
 | 1 · Pedir, probar, citar | R1 solo nombres reales · R2 nunca filas · R3 todo conteo cierra · R4 prueba independiente · R5 no borrar en silencio · R6 fechas · R7 valores imposibles se cuentan · R8 primero igual, después rápido · R9 citar con fecha | D1–D4, D9, D12, D13, D18, D20 |
 | 2 · Ingesta y procesamiento | R10 leer completo · R11 esquema declarado · R12 correr dos veces da lo mismo · R13 particionar sin perder nulos · R14 limpiar es marcar · R15 las cinco pruebas · R16 sin traer todo a memoria | D5–D7, D12, D13, DL1–DL7 |
 | 3 · Analítica | hipótesis, línea base, partición temporal, fuga, umbral, desmentir con una consulta, bitácora | D15, D16, D27 |
-| 4 · Visualización y gobernanza | etiqueta exacta, eje desde cero, factor de mentira, período incompleto, cuenta de control, unicidad (k), qué no se pega al asistente, cita | D17–D20, D24 |
+| 4 · Visualización y gobernanza | etiqueta exacta, eje desde cero, factor de mentira, período incompleto, cuenta de control, color con contraste y apto para daltonismo, presentación con la respuesta primero y cifras que escribe el código, unicidad (k), qué no se pega al asistente, cita | D17–D20, D24, D29, D30 |
 
 R13 y R16 son de PySpark: aquí no aplican, porque los datos caben en memoria (91.072 filas).
 
